@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Determine Residential Status – Section 6, Income-tax Act, 1961</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #1f3c88;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #1f3c88;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .col {
+            flex: 1;
+            min-width: 260px;
+            padding: 6px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+        }
+        select, input {
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 18px;
+            margin: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .calculate {
+            background: #1f3c88;
+            color: #fff;
+            border: none;
+        }
+        .reset {
+            background: #777;
+            color: #fff;
+            border: none;
+        }
+        .output {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f1f5ff;
+            border-left: 4px solid #1f3c88;
+        }
+        .hidden {
+            display: none;
+        }
+        .note {
+            font-size: 13px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Determine Residential Status</h1>
+    <p class="note" style="text-align:center;">
+        As per Section 6 of the Income-tax Act, 1961 (Individuals)
+    </p>
+
+    <h2>User Inputs</h2>
+
+    <div class="row">
+        <div class="col">
+            <label>Financial Year</label>
+            <select id="fy">
+                <option value="">Select FY</option>
+                <option>2020-21</option>
+                <option>2021-22</option>
+                <option>2022-23</option>
+                <option>2023-24</option>
+                <option>2024-25</option>
+                <option>2025-26</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>Citizenship</label>
+            <select id="citizenship" onchange="toggleFields()">
+                <option value="">Select</option>
+                <option value="indian">Indian Citizen</option>
+                <option value="foreign">Foreign Citizen</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>Person of Indian Origin (PIO)</label>
+            <select id="pio" onchange="toggleFields()">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label>Purpose of Visit / Departure</label>
+            <select id="purpose">
+                <option value="">Select</option>
+                <option value="employment">Leaving India for Employment</option>
+                <option value="crew">Crew of Indian Ship</option>
+                <option value="visit">Visiting India</option>
+                <option value="other">Other / Not Applicable</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>Days in India during Relevant FY</label>
+            <input type="number" id="daysFY" min="0">
+        </div>
+        <div class="col">
+            <label>Days in India during Preceding 4 FYs (Total)</label>
+            <input type="number" id="days4FY" min="0">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label>Days in India during Preceding 7 FYs (Total)</label>
+            <input type="number" id="days7FY" min="0">
+        </div>
+        <div class="col">
+            <label>No. of Years Resident in Preceding 10 FYs</label>
+            <input type="number" id="yearsResident10" min="0" max="10">
+        </div>
+        <div class="col">
+            <label>Total Indian Income (₹)</label>
+            <input type="number" id="income" min="0">
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="calculate" onclick="calculateStatus()">Calculate</button>
+        <button class="reset" onclick="resetForm()">Reset</button>
+    </div>
+
+    <div id="result" class="output hidden"></div>
+</div>
+
+<script>
+/*
+ Core Tax Logic – Section 6, Income-tax Act, 1961
+ ------------------------------------------------
+ STEP 1: Determine whether individual is Resident or Non-Resident using:
+   A. 182-day rule, OR
+   B. 60-day + 365-day rule (with statutory exceptions)
+
+ STEP 2: Modify 60-day threshold to:
+   - 182 days for:
+        * Indian citizen leaving India for employment
+        * Indian citizen leaving as crew of Indian ship
+        * Indian citizen / PIO visiting India
+   - 120 days for Indian citizen / PIO visiting India
+        if Indian income > ₹15 lakh
+
+ STEP 3: If Resident, classify as:
+   - ROR if BOTH conditions satisfied:
+        * Resident in ≥2 of preceding 10 FYs
+        * Stay ≥730 days in preceding 7 FYs
+   - Else RNOR
+*/
+
+function toggleFields() {
+    // Placeholder for future dynamic UX enhancements
+}
+
+function calculateStatus() {
+    const citizenship = document.getElementById("citizenship").value;
+    const pio = document.getElementById("pio").value;
+    const purpose = document.getElementById("purpose").value;
+    const daysFY = parseInt(document.getElementById("daysFY").value || 0);
+    const days4FY = parseInt(document.getElementById("days4FY").value || 0);
+    const days7FY = parseInt(document.getElementById("days7FY").value || 0);
+    const yearsResident10 = parseInt(document.getElementById("yearsResident10").value || 0);
+    const income = parseInt(document.getElementById("income").value || 0);
+
+    let explanation = [];
+    let resident = false;
+
+    if (daysFY >= 182) {
+        resident = true;
+        explanation.push("Stayed in India for ≥182 days during the relevant FY (Section 6(1)(a)).");
+    } else {
+        let threshold = 60;
+
+        if (citizenship === "indian" && (purpose === "employment" || purpose === "crew")) {
+            threshold = 182;
+            explanation.push("60-day condition replaced with 182 days (Indian citizen leaving India for employment / crew of Indian ship).");
+        } else if ((citizenship === "indian" || pio === "yes") && purpose === "visit") {
+            if (income > 1500000) {
+                threshold = 120;
+                explanation.push("120-day rule applied (Indian citizen / PIO visiting India with Indian income exceeding ₹15 lakh).");
+            } else {
+                threshold = 182;
+                explanation.push("60-day condition replaced with 182 days (Indian citizen / PIO visiting India).");
+            }
+        }
+
+        if (daysFY >= threshold && days4FY >= 365) {
+            resident = true;
+            explanation.push(`Stayed in India for ≥${threshold} days in the relevant FY and ≥365 days in the preceding 4 FYs (Section 6(1)(c)).`);
+        } else {
+            explanation.push("Basic conditions of residence under Section 6 not satisfied.");
+        }
+    }
+
+    let status = "Non-Resident (NR)";
+
+    if (resident) {
+        const cond1 = yearsResident10 >= 2;
+        const cond2 = days7FY >= 730;
+
+        if (cond1 && cond2) {
+            status = "Resident and Ordinarily Resident (ROR)";
+            explanation.push("Additional conditions satisfied: Resident in ≥2 of preceding 10 FYs and stay ≥730 days in preceding 7 FYs (Section 6(6)(a)).");
+        } else {
+            status = "Resident but Not Ordinarily Resident (RNOR)";
+            explanation.push("One or both additional conditions for ROR not satisfied; classified as RNOR (Section 6(6)).");
+        }
+    }
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.classList.remove("hidden");
+    resultDiv.innerHTML = `
+        <h2>Result</h2>
+        <p><strong>Residential Status:</strong> ${status}</p>
+        <p><strong>Legal Explanation (Section 6):</strong></p>
+        <ul>${explanation.map(e => `<li>${e}</li>`).join("")}</ul>
+    `;
+}
+
+function resetForm() {
+    document.querySelectorAll("input, select").forEach(el => el.value = "");
+    document.getElementById("pio").value = "no";
+    document.getElementById("result").classList.add("hidden");
+}
+</script>
+
+</body>
+</html>
