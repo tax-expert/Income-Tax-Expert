@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>India Income-tax Tools — Calculator & Residential Status</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Income-tax Tools | CA Navneet Singh Bagga</title>
 
   <style>
     :root{
-      --bg:#0b1220; --card:#121b2e; --muted:#9fb0d0; --text:#e8eefc; --accent:#6aa7ff;
-      --good:#5ee08b; --bad:#ff6a6a; --line:rgba(255,255,255,.10);
+      --bg:#0b1220; --card:#121b2e; --muted:#9fb0d0;
+      --text:#e8eefc; --accent:#6aa7ff;
+      --line:rgba(255,255,255,.10);
     }
     body{
       margin:0;
@@ -16,45 +17,27 @@
       background:linear-gradient(135deg,#081027,#0b1220);
       color:var(--text);
     }
-    .wrap{ max-width:1150px; margin:28px auto; padding:0 16px; }
-    h1{ font-size:1.4rem; margin:0 0 6px; }
-    .sub{ color:var(--muted); margin:0 0 18px; font-size:.95rem; }
+    .wrap{ max-width:1000px; margin:40px auto; padding:0 16px; }
+    h1{ margin:0 0 6px; }
+    .sub{ color:var(--muted); margin-bottom:24px; }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:18px;
+    }
     .card{
       background:rgba(18,27,46,.92);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:14px;
+      border-radius:16px;
+      padding:18px;
       box-shadow:0 14px 40px rgba(0,0,0,.28);
-      margin-bottom:16px;
     }
-    .row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    @media (max-width:860px){ .row{ grid-template-columns:1fr; } }
-    label{ color:var(--muted); font-size:.88rem; display:block; margin:10px 0 6px; }
-    input,select{
-      width:100%; padding:10px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.14);
-      background:#0c1427; color:var(--text);
-    }
-    button{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(106,167,255,.22), rgba(106,167,255,.08));
-      color:var(--text);
-      padding:10px 14px;
-      border-radius:12px;
-      font-weight:650;
-    }
-    .btns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-    .pill{
-      padding:6px 10px; border-radius:999px;
-      font-size:.82rem; color:var(--muted);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .tool-link{
+    .card h2{ margin-top:0; }
+    .card p{ color:var(--muted); }
+    .btn{
       display:inline-block;
-      margin-top:10px;
-      padding:10px 14px;
+      margin-top:12px;
+      padding:10px 16px;
       border-radius:12px;
       background:linear-gradient(180deg, rgba(106,167,255,.22), rgba(106,167,255,.08));
       border:1px solid rgba(255,255,255,.14);
@@ -64,9 +47,9 @@
     }
     footer{
       text-align:center;
+      margin-top:40px;
       color:var(--muted);
       font-size:.85rem;
-      margin-top:20px;
     }
   </style>
 </head>
@@ -74,63 +57,47 @@
 <body>
 <div class="wrap">
 
-  <!-- HEADER -->
-  <h1>India Income-tax Tools</h1>
+  <h1>Income-tax Tools</h1>
   <p class="sub">
-    Professional calculators for Individuals — built for clarity, accuracy and learning.
+    Practical calculators and utilities for Indian Income-tax compliance.
   </p>
 
-  <!-- INCOME TAX CALCULATOR (UNCHANGED LOGIC CAN BE REINSERTED HERE IF NEEDED) -->
-  <div class="card">
-    <h2 style="margin-top:0;">Income-tax Calculator (FY 2025–26)</h2>
-    <p class="sub">
-      Compare <b>New vs Old Regime</b> with surcharge, marginal relief and cess.
-    </p>
+  <div class="grid">
 
-    <div class="row">
-      <div>
-        <label>Resident Individual?</label>
-        <select>
-          <option>Yes (Resident)</option>
-          <option>No (Non-Resident)</option>
-        </select>
-      </div>
-      <div>
-        <label>Gross Total Income (₹)</label>
-        <input type="number" placeholder="e.g. 1500000">
-      </div>
+    <!-- Income Tax Calculator -->
+    <div class="card">
+      <h2>Income-tax Calculator</h2>
+      <p>
+        Compare Old vs New Regime (FY 2025–26) with surcharge,
+        marginal relief and cess.
+      </p>
+      <a href="income-tax-calculator.html" class="btn">
+        Open Calculator
+      </a>
     </div>
 
-    <div class="btns">
-      <button type="button">Calculate</button>
-      <button type="button">Reset</button>
-      <span class="pill">FY 2025–26</span>
+    <!-- Residential Status -->
+    <div class="card">
+      <h2>Residential Status</h2>
+      <p>
+        Determine NR / RNOR / ROR under Section 6 of the
+        Income-tax Act, 1961.
+      </p>
+      <a href="residential-status.html" class="btn">
+        Determine Status
+      </a>
     </div>
-  </div>
 
-  <!-- OTHER TAX TOOLS -->
-  <div class="card">
-    <h2 style="margin-top:0;">Other Tax Tools</h2>
-
-    <a href="residential-status.html" class="tool-link">
-      Determine Residential Status (Section 6)
-    </a>
-
-    <!-- Future expansion ready -->
-    <!--
-    <a href="old-vs-new.html" class="tool-link">Old vs New Regime Explainer</a>
-    -->
   </div>
 
 </div>
 
 <footer>
-  © <span id="year"></span> <b>CA Navneet Singh Bagga</b> · For educational purposes only
+  © <span id="yr"></span> <b>CA Navneet Singh Bagga</b> · For educational use only
 </footer>
 
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("yr").textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
